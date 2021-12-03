@@ -1,0 +1,938 @@
+<html>
+
+<head>
+    <style>
+        body {
+            background: url('images/bg.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+        #container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: flex-start;
+        }
+        .category-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .category {
+            /* position: relative; */
+            background-color: hsla(0, 0%, 100%, 0.8);
+            border-radius: 20px;
+            padding: 20px 35px 10px 35px;
+            margin: 5px;
+            width: auto;
+        }
+        b {
+            font-family: ViceCitySans;
+            font-size: 1.1em;
+        }
+        .contents {
+            display: flex;
+            justify-content: space-between;
+        }
+        .vertical {
+            flex-direction: column;
+        }
+        .contents > div {
+            margin: 10px;
+        }
+        .contents > div > ul {
+            list-style: none;
+            padding: 0;
+            font-family: ViceCitySans;
+        }
+        @font-face {
+            font-family: ViceCitySans;
+            src: url("fonts/ViceCitySans.otf") format("opentype");
+        }
+
+        #progress,
+        #perks {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            width: 300px;
+            height: 25px;
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            font-size: 20px;
+            font-family: ViceCitySans;
+            padding: 10px;
+            padding-left: 15px;
+        }
+
+        #perks {
+            display: flex;
+            top: 70px;
+            height: auto;
+            min-width: 300px;
+            width: auto;
+        }
+
+        #perks > div {
+            margin: 10px;
+        }
+
+        #perks h4 {
+            margin: 0;
+            margin-bottom: 20px;
+        }
+
+        #perks div > i {
+            margin-right: 5px;
+        }
+
+        #header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #header > div:nth-child(2) {
+            font-family: ViceCitySans;
+            color: #fff;
+            font-size: 42px;
+            margin-left: 20px;
+        }
+
+        #intro > div:nth-child(1) {
+            text-shadow: 3px 3px #000;
+        }
+
+        #intro > div:nth-child(2) {
+            font-size: 22px;
+            text-shadow: 2px 2px #000;
+        }
+
+        #intro a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        #links {
+            font-size: 26px;
+            text-shadow: 1px 1px #000;
+        }
+
+        #links span {
+            margin: 0 5px;
+        }
+
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/fontawesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+
+<body>
+
+    <div id="progress">Loading...</div>
+
+    <div id="perks" style="display: none;">
+        <div>
+            <h4>Unlockable Perks</h4>
+            <div data-requires="vehicle3"><i class="fas fa-check-circle"></i> 150 Health</div> <!-- Pizza Boy -->
+            <div data-requires="vehicle5"><i class="fas fa-times-circle"></i> 150 Armor</div> <!-- Vigilante -->
+            <div data-requires="vehicle4"><i class="fas fa-times-circle"></i> Fireproof</div> <!-- Firefighter -->
+            <div data-requires="other1"><i class="fas fa-times-circle"></i> Fast Reload</div> <!-- Shooting Range: 45 Points -->
+            <div data-requires="vehicle2"><i class="fas fa-times-circle"></i> Infinite Sprint</div> <!-- Paramedic -->
+            <div data-requires="vehicle1"><i class="fas fa-times-circle"></i> Taxi Boost Jump</div> <!-- Taxi Driver -->
+            <br>
+            <h4>100% Completion Unlocks</h4> <!-- These perks are awarded for reaching 100% completion -->
+            <div><i class="fas fa-times-circle"></i> 200 Health</div>
+            <div><i class="fas fa-times-circle"></i> 200 Armor</div>
+            <div><i class="fas fa-times-circle"></i> Replenishing Ammo</div>
+            <div><i class="fas fa-times-circle"></i> 2x Vehicle Durability</div>
+            <div><i class="fas fa-times-circle"></i> Bodyguards</div>
+            <div><i class="fas fa-times-circle"></i> Frankie Outfit</div>
+        </div>
+        <div>
+            <h4>Spawnable Unlocks</h4> <!-- All Weapons & Body Armor spawn at Ocean View Hotel, Vercetti Estate & Hyman Condo -->
+            <div><i class="fas fa-times-circle"></i> Body Armor</div> <!-- 10 Packages -->
+            <div><i class="fas fa-times-circle"></i> Chainsaw</div> <!-- 20 Packages -->
+            <div><i class="fas fa-times-circle"></i> Colt Python</div> <!-- 30 Packages -->
+            <div><i class="fas fa-times-circle"></i> Flamethrower</div> <!-- 40 Packages -->
+            <div><i class="fas fa-times-circle"></i> Combat Sniper</div> <!-- 50 Packages -->
+            <div><i class="fas fa-times-circle"></i> Minigun</div> <!-- 60 Packages -->
+            <div><i class="fas fa-times-circle"></i> Rocket Launcher</div> <!-- 70 Packages -->
+            <div><i class="fas fa-times-circle"></i> Sea Sparrow</div> <!-- 80 Packages, Spawns at Vercetti Estate -->
+            <div><i class="fas fa-times-circle"></i> Rhino</div> <!-- 90 Packages, Spawns at Fort Baxter Air Base -->
+            <div><i class="fas fa-times-circle"></i> Hunter</div> <!-- 100 Packages, Spawns at Fort Baxter Air Base & Helipad in Ocean Beach after finishing main story -->
+            <br>
+            <div data-requires="import1"><i class="fas fa-times-circle"></i> Deluxo</div> <!-- Import List 1, Spawns at Sunshine Autos -->
+            <div data-requires="import2"><i class="fas fa-times-circle"></i> Sabre Turbo</div> <!-- Import List 2, Spawns at Sunshine Autos -->
+            <div data-requires="import3"><i class="fas fa-times-circle"></i> Sandking</div> <!-- Import List 3, Spawns at Sunshine Autos -->
+            <div data-requires="import4"><i class="fas fa-times-circle"></i> Hotring Racer</div> <!-- Import List 4, Spawns at Sunshine Autos -->
+            <div data-requires="arena3"><i class="fas fa-times-circle"></i> Bloodring Bangers</div> <!-- Spawns outside Hyman Memorial Stadium after completing Bloodring -->
+            <div data-requires="cab3"><i class="fas fa-times-circle"></i> Zebra Cab</div> <!-- Spawns at Kaufman Cabs after completing associated asset missions -->
+            <div data-requires="film4"><i class="fas fa-times-circle"></i> Skimmer</div> <!-- ! CONFIRM THIS: Spawns behind the Film Studio after completing associated asset missions -->
+        </div>
+        <div>
+            <h4>Unlockable Outfits</h4>
+            <div data-requires="malibu4"><i class="fas fa-times-circle"></i> Bank Job Outfit</div> <!-- Complete "The Job", Spawns at Malibu Property -->
+            <div data-requires="juan1"><i class="fas fa-times-circle"></i> Casual Outfit</div> <!-- Complete "Treacherous Swine", Spawns at Gash in North Point Mall -->
+            <div data-requires="tommy3"><i class="fas fa-times-circle"></i> Police Outfit</div> <!-- Complete "Copland", Spawns at Police Station -->
+            <div data-requires="avery1"><i class="fas fa-times-circle"></i> Country Club Outfit</div> <!-- Complete "Four Iron", Spawns at Leaf Links Golf Course -->
+            <div data-requires="avery3"><i class="fas fa-times-circle"></i> Little Havana Gang Outfit</div> <!-- Complete "Two Bit Hit", Spawns at Little Havana Streetware store -->
+            <div data-requires="p_pole"><i class="fas fa-times-circle"></i> Mr. Vercetti Outfit</div> <!-- Purchase Pole Position property, Spawns at Collars N' Cuffs store -->
+            <div data-requires="ken1"><i class="fas fa-times-circle"></i> Soiree Outfit</div> <!-- Complete "The Party", Spawns at Rafeal's store -->
+            <div data-requires="ken4"><i class="fas fa-times-circle"></i> Spandex Overalls</div> <!-- Complete "Riot", Spawns at Tooled Up store in North Point Mall -->
+            <div data-requires="diaz4"><i class="fas fa-times-circle"></i> Black Tracksuit Outfit</div> <!-- Complete "Supply and Demand", Spawns at Jockpoint store -->
+        </div>
+    </div>
+
+    <div id="header">
+
+        <!-- Vice City Logo -->
+        <div style="text-align: center;">
+            <img src="images/vc-logo.png" style="height: 250px;">
+        </div>
+
+        <div id="intro">
+            <div>100% Checklist</div>
+            <div>by <a href="https://twitter.com/ParadoxEpoch" target="_blank">@ParadoxEpoch</a></div>
+            <br>
+            <div id="links">
+                <a href="https://nebu.dev" target="_blank"><i class="fas fa-globe-americas"></i></a>
+                <span>&#183;</span>
+                <a href="https://twitter.com/ParadoxEpoch" target="_blank"><i class="fab fa-twitter"></i></a>
+                <span>&#183;</span>
+                <a href="https://github.com/maega" target="_blank"><i class="fab fa-github"></i></a>
+                <!-- <span>&#183;</span>
+                <a href="#" target="_blank"><i class="fab fa-bitcoin"></i></a> -->
+            </div>
+        </div>
+
+    </div>
+
+    <div id="container">
+
+        <div class="category-container">
+
+            <!-- Story Missions -->
+            <div class="category">
+
+                <div style="text-align: center">
+                    <img style="height: 80px;" src="images/storymissions.png">
+                </div>
+
+                <div class="contents">
+                    <div>
+                        <img src="icons/ken.png">
+                        <b>Ken Rosenburg</b>
+                        <ul>
+                            <li><input type="checkbox" id="ken1"> The Party</li>
+                            <li><input type="checkbox" id="ken2"> Back Alley Brawl</li>
+                            <li><input type="checkbox" id="ken3"> Jury Fury</li>
+                            <li><input type="checkbox" id="ken4"> Riot</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <img src="icons/avery.png">
+                        <b>Avery Carrington</b>
+                        <ul>
+                            <li><input type="checkbox" id="avery1"> Four Iron</li>
+                            <li><input type="checkbox" id="avery2"> Demolition Man</li>
+                            <li><input type="checkbox" id="avery3"> Two Bit Hit</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <img src="icons/juan.png">
+                        <b>Juan Cortez</b>
+                        <ul>
+                            <li><input type="checkbox" id="juan1"> Treacherous Swine</li>
+                            <li><input type="checkbox" id="juan2"> Mall Shootout</li>
+                            <li><input type="checkbox" id="juan3"> Guardian Angels</li>
+                            <li><input type="checkbox" id="juan4"> Sir, Yes Sir!</li>
+                            <li><input type="checkbox" id="juan5"> All Hands On Deck</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <img src="icons/diaz.png">
+                        <b>Ricardo Diaz</b>
+                        <ul>
+                            <li><input type="checkbox" id="diaz1"> The Chase</li>
+                            <li><input type="checkbox" id="diaz2"> Phnom Penh '86</li>
+                            <li><input type="checkbox" id="diaz3"> The Fastest Boat</li>
+                            <li><input type="checkbox" id="diaz4"> Supply &amp; Demand</li>
+                            <li><input type="checkbox" id="diaz5"> Rub Out</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <img src="icons/kent.png">
+                        <b>Kent Paul</b>
+                        <ul>
+                            <li><input type="checkbox" id="kent1"> Death Row</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <img src="icons/tommy.png">
+                        <b>Final Missions</b>
+                        <ul>
+                            <li><input type="checkbox" id="final1"> Cap The Collector</li>
+                            <li><input type="checkbox" id="final2"> Keep Your Friends Close</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Asset Missions -->
+            <div class="category">
+
+                <div style="text-align: center">
+                    <img style="height: 80px;" src="images/assetmissions.png">
+                </div>
+
+                <div class="contents">
+
+                    <div>
+                        <img src="icons/tommy.png">
+                        <b>Tommy Vercetti</b>
+                        <ul>
+                            <li><input type="checkbox" id="tommy1"> Shakedown</li>
+                            <li><input type="checkbox" id="tommy2"> Bar Brawl</li>
+                            <li><input type="checkbox" id="tommy3"> Copland</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <img src="icons/cab.png">
+                        <b>Kaufman Cabs</b>
+                        <ul>
+                            <li><input type="checkbox" id="cab1"> VIP</li>
+                            <li><input type="checkbox" id="cab2"> Friendly Rivalry</li>
+                            <li><input type="checkbox" id="cab3"> Cabmaggedon</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <img src="icons/film.png">
+                        <b>InterGlobal Studios</b>
+                        <ul>
+                            <li><input type="checkbox" id="film1"> Recruitment Drive</li>
+                            <li><input type="checkbox" id="film2"> Dildo Dodo</li>
+                            <li><input type="checkbox" id="film3"> Martha's Mug Shot</li>
+                            <li><input type="checkbox" id="film4"> G-Spotlight</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <img src="icons/sunshine.png">
+                        <b>Sunshine Autos</b>
+                        <ul>
+                            <li><input type="checkbox" id="import1"> Import List 1</li>
+                            <li><input type="checkbox" id="import2"> Import List 2</li>
+                            <li><input type="checkbox" id="import3"> Import List 3</li>
+                            <li><input type="checkbox" id="import4"> Import List 4</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <img src="icons/malibu.png">
+                        <b>The Malibu</b>
+                        <ul>
+                            <li><input type="checkbox" id="malibu1"> No Escape?</li>
+                            <li><input type="checkbox" id="malibu2"> The Shootist</li>
+                            <li><input type="checkbox" id="malibu3"> The Driver</li>
+                            <li><input type="checkbox" id="malibu4"> The Job</li>
+                        </ul>
+                    </div>
+
+                </div>
+
+                <div class="contents">
+
+                    <div>
+                        <img src="icons/boatyard.png">
+                        <b>Boatyard</b>
+                        <ul>
+                            <li><input type="checkbox" id="boatyard1"> Checkpoint Charlie</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <img src="icons/phil.png">
+                        <b>Phil Cassidy</b>
+                        <ul>
+                            <li><input type="checkbox" id="phil1"> Gun Runner</li>
+                            <li><input type="checkbox" id="phil2"> Boomshine Saigon</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <img src="icons/print.png">
+                        <b>Print Works</b>
+                        <ul>
+                            <li><input type="checkbox" id="print1"> Spilling the Beans</li>
+                            <li><input type="checkbox" id="print2"> Hit the Courier</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <img src="icons/pole.png">
+                        <b>The Pole Position Club</b>
+                        <ul>
+                            <li><input type="checkbox" id="pole1"> Spend $300</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <img src="icons/cherry.png">
+                        <b>Ice Cream Factory</b>
+                        <ul>
+                            <li><input type="checkbox" id="cherry1"> Distribution x50</li>
+                        </ul>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="category-container vertical">
+
+            <!-- Gang Missions -->
+            <div class="category">
+
+                <div style="text-align: center">
+                    <img style="height: 80px;" src="images/gangmissions.png">
+                </div>
+
+                <div class="contents vertical">
+
+                    <div>
+                        <img src="icons/cubans.png">
+                        <b>Umberto Robina</b>
+                        <ul style="columns:2">
+                            <li><input type="checkbox"> Stunt Boat Challenge</li>
+                            <li><input type="checkbox"> Cannon Fodder</li>
+                            <li><input type="checkbox"> Naval Engagement</li>
+                            <li><input type="checkbox"> Trojan Voodoo</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <img src="icons/haitians.png">
+                        <b>Auntie Poulet</b>
+                        <ul style="columns:2">
+                            <li><input type="checkbox"> Juju Scramble</li>
+                            <li><input type="checkbox"> Bombs Away</li>
+                            <li><input type="checkbox"> Dirty Lickin's</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <img src="icons/lovefist.png">
+                        <b>Love Fist</b>
+                        <ul style="columns:2">
+                            <li><input type="checkbox"> Love Juice</li>
+                            <li><input type="checkbox"> Psycho Killer</li>
+                            <li><input type="checkbox"> Publicity Tour</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <img src="icons/bikers.png">
+                        <b>Mitch Baker</b>
+                        <ul style="columns:2">
+                            <li><input type="checkbox"> Alloy Wheels Of Steel</li>
+                            <li><input type="checkbox"> Messing With The Man</li>
+                            <li><input type="checkbox"> Hog Tied</li>
+                        </ul>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Other -->
+            <div class="category">
+
+                <div style="text-align: center">
+                    <img style="height: 80px;" src="images/other.png">
+                </div>
+
+                <div class="contents">
+
+                    <div style="margin: auto">
+                        <ul style="margin-top: 0">
+                            <li><input type="checkbox" id="other1"> Ammu-Nation Shooting Range</li>
+                        </ul>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="category-container vertical">
+
+            <!-- Street Races -->
+            <div class="category">
+
+                <div style="text-align: center">
+                    <img style="height: 80px;" src="images/streetraces.png">
+                </div>
+
+                <div class="contents">
+                    <div style="margin: 0px auto 10px auto">
+                        <ul style="columns: 2">
+                            <li><input type="checkbox" id="sunrace1"> Terminal Velocity</li>
+                            <li><input type="checkbox" id="sunrace2"> Ocean Drive</li>
+                            <li><input type="checkbox" id="sunrace3"> Border Run</li>
+                            <li><input type="checkbox" id="sunrace4"> Capital Cruise</li>
+                            <li><input type="checkbox" id="sunrace5"> Tour!</li>
+                            <li><input type="checkbox" id="sunrace6"> V.C. Endurance</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Other Races -->
+            <div class="category">
+
+                <div style="text-align: center">
+                    <img style="height: 80px;" src="images/otherraces.png">
+                </div>
+
+                <div class="contents vertical">
+
+                    <div>
+                        <b>Arena Missions</b>
+                        <ul style="columns:2">
+                            <li><input type="checkbox" id="arena1"> Hotring</li>
+                            <li><input type="checkbox" id="arena2"> Dirtring</li>
+                            <li><input type="checkbox" id="arena3"> Bloodring</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <b>Top-Fun Missions</b>
+                        <ul style="columns:2">
+                            <li><input type="checkbox" id="rc1"> RC Bandit Race</li>
+                            <li><input type="checkbox" id="rc2"> RC Baron Race</li>
+                            <li><input type="checkbox" id="rc3"> RC Raider Pickup</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <b>Chopper Checkpoints</b>
+                        <ul style="columns:2">
+                            <li><input type="checkbox" id="chopper1"> Ocean Beach</li>
+                            <li><input type="checkbox" id="chopper2"> Little Haiti</li>
+                            <li><input type="checkbox" id="chopper3"> Vice Point</li>
+                            <li><input type="checkbox" id="chopper4"> Downtown</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <b>Off-Road Missions</b>
+                        <ul style="columns:2">
+                            <li><input type="checkbox" id="offroad1"> Cone Crazy</li>
+                            <li><input type="checkbox" id="offroad2"> PCJ Playground</li>
+                            <li><input type="checkbox" id="offroad3"> Trial By Dirt</li>
+                            <li><input type="checkbox" id="offroad4"> Test Track</li>
+                        </ul>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="category-container vertical">
+
+            <!-- Properties -->
+            <div class="category">
+
+                <div style="text-align: center">
+                    <img style="height: 80px;" src="images/properties.png">
+                </div>
+
+                <div class="contents">
+                    <div style="margin: 0px auto">
+                        <ul style="columns: 2">
+                            <li><input type="checkbox" id="p_malibu"> The Malibu Club</li>
+                            <li><input type="checkbox" id="p_print"> Print Works</li>
+                            <li><input type="checkbox" id="p_cab"> Kaufman Cabs</li>
+                            <li><input type="checkbox" id="p_boatyard"> Boatyard</li>
+                            <li><input type="checkbox" id="p_cherry"> Ice Cream Factory</li>
+                            <li><input type="checkbox" id="p_film"> Film Studio</li>
+                            <li><input type="checkbox" id="p_sunshine"> Sunshine Autos</li>
+                            <li><input type="checkbox" id="p_pole"> Pole Position</li>
+                            <li><input type="checkbox" id="p_ocean"> Ocean Heights</li>
+                            <li><input type="checkbox" id="p_links"> Links View Apartments</li>
+                            <li><input type="checkbox" id="p_washington"> 1102 Washington Street</li>
+                            <li><input type="checkbox" id="p_vicepoint"> 3321 Vice Point</li>
+                            <li><input type="checkbox" id="p_shack"> Skumole Shack</li>
+                            <li><input type="checkbox" id="p_swanko"> El Swanko Casa</li>
+                            <li><input type="checkbox" id="p_hyman"> Hyman Condo</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Assassination Contracts -->
+            <div class="category">
+
+                <div style="text-align: center">
+                    <img style="height: 80px;" src="images/assassinations.png">
+                </div>
+
+                <div class="contents">
+                    <div style="margin: 0px auto">
+                        <ul style="columns: 2; margin-top: 0">
+                            <li><input type="checkbox" id="assassin1"> Road Kill</li>
+                            <li><input type="checkbox" id="assassin2"> Waste the Wife</li>
+                            <li><input type="checkbox" id="assassin3"> Autocide</li>
+                            <li><input type="checkbox" id="assassin4"> Check Out at the Check In</li>
+                            <li><input type="checkbox" id="assassin5"> Loose Ends</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- R3 Missions -->
+            <div class="category">
+
+                <div style="text-align: center">
+                    <img style="height: 80px;" src="images/r3missions.png">
+                </div>
+
+                <div class="contents">
+                    <div style="margin: 0px auto">
+                        <ul style="columns: 2">
+                            <li><input type="checkbox" id="vehicle1"> Taxi Driver: 100 Fares</li>
+                            <li><input type="checkbox" id="vehicle2"> Paramedic: Level 12</li>
+                            <li><input type="checkbox" id="vehicle3"> Pizza Boy: Level 10</li>
+                            <li><input type="checkbox" id="vehicle4"> Firefighter: Level 12</li>
+                            <li><input type="checkbox" id="vehicle5"> Vigilante: Level 12</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="category-container vertical">
+
+            <!-- Robberies -->
+            <div class="category">
+
+                <div style="text-align: center">
+                    <img style="height: 80px;" src="images/robberies.png">
+                </div>
+
+                <div class="contents">
+                    <div style="margin: 0px auto">
+                        <ul style="columns: 2; margin-top: 0">
+                            <li><input type="checkbox" id="robbery1"> Corner Store - Vice Point</li>
+                            <li><input type="checkbox" id="robbery2"> Dispensary - Vice Point</li>
+                            <li><input type="checkbox" id="robbery3"> Jewelry Store - Vice Point</li>
+                            <li><input type="checkbox" id="robbery4"> Gash - North Point Mall</li>
+                            <li><input type="checkbox" id="robbery5"> Music Store - North Point Mall</li>
+                            <li><input type="checkbox" id="robbery6"> Jewelry Store - North Point Mall</li>
+                            <li><input type="checkbox" id="robbery7"> Tooled Up - North Point Mall</li>
+                            <li><input type="checkbox" id="robbery8"> Bunch of Tools - Washington Beach</li>
+                            <li><input type="checkbox" id="robbery9"> Ryton Aide Pharmacy - Little Haiti</li>
+                            <li><input type="checkbox" id="robbery10"> Pharmacy - Downtown</li>
+                            <li><input type="checkbox" id="robbery11"> Jewelry Store - Downtown</li>
+                            <li><input type="checkbox" id="robbery12"> Deli - Little Havana</li>
+                            <li><input type="checkbox" id="robbery13"> Doughnut Store - Little Havana</li>
+                            <li><input type="checkbox" id="robbery14"> Laundromat - Little Havana</li>
+                            <li><input type="checkbox" id="robbery15"> Screw This - Little Havana</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+            
+            <div style="display: flex; flex-wrap: wrap; justify-content: center;">
+
+                <!-- Rampages -->
+                <div class="category">
+
+                    <div style="text-align: center">
+                        <img style="height: 80px;" src="images/rampages.png">
+                    </div>
+
+                    <div class="contents">
+                        <div style="margin: 10px auto">
+
+                            <ul style="columns: 5">
+                                <li><input type="checkbox"> 01</li>
+                                <li><input type="checkbox"> 02</li>
+                                <li><input type="checkbox"> 03</li>
+                                <li><input type="checkbox"> 04</li>
+                                <li><input type="checkbox"> 05</li>
+                                <li><input type="checkbox"> 06</li>
+                                <li><input type="checkbox"> 07</li>
+                                <li><input type="checkbox"> 08</li>
+                                <li><input type="checkbox"> 09</li>
+                                <li><input type="checkbox"> 10</li>
+                                <li><input type="checkbox"> 11</li>
+                                <li><input type="checkbox"> 12</li>
+                                <li><input type="checkbox"> 13</li>
+                                <li><input type="checkbox"> 14</li>
+                                <li><input type="checkbox"> 15</li>
+                                <li><input type="checkbox"> 16</li>
+                                <li><input type="checkbox"> 17</li>
+                                <li><input type="checkbox"> 18</li>
+                                <li><input type="checkbox"> 19</li>
+                                <li><input type="checkbox"> 20</li>
+                                <li><input type="checkbox"> 21</li>
+                                <li><input type="checkbox"> 22</li>
+                                <li><input type="checkbox"> 23</li>
+                                <li><input type="checkbox"> 24</li>
+                                <li><input type="checkbox"> 25</li>
+                                <li><input type="checkbox"> 26</li>
+                                <li><input type="checkbox"> 27</li>
+                                <li><input type="checkbox"> 28</li>
+                                <li><input type="checkbox"> 29</li>
+                                <li><input type="checkbox"> 30</li>
+                                <li><input type="checkbox"> 31</li>
+                                <li><input type="checkbox"> 32</li>
+                                <li><input type="checkbox"> 33</li>
+                                <li><input type="checkbox"> 34</li>
+                                <li><input type="checkbox"> 35</li>
+                            </ul>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Stunt Jumps -->
+                <div class="category">
+
+                    <div style="text-align: center">
+                        <img style="height: 80px;" src="images/stuntjumps.png">
+                    </div>
+
+                    <div class="contents">
+                        <div style="margin: 10px auto">
+                            <ul style="columns: 5">
+                                <li><input type="checkbox"> 01</li>
+                                <li><input type="checkbox"> 02</li>
+                                <li><input type="checkbox"> 03</li>
+                                <li><input type="checkbox"> 04</li>
+                                <li><input type="checkbox"> 05</li>
+                                <li><input type="checkbox"> 06</li>
+                                <li><input type="checkbox"> 07</li>
+                                <li><input type="checkbox"> 08</li>
+                                <li><input type="checkbox"> 09</li>
+                                <li><input type="checkbox"> 10</li>
+                                <li><input type="checkbox"> 11</li>
+                                <li><input type="checkbox"> 12</li>
+                                <li><input type="checkbox"> 13</li>
+                                <li><input type="checkbox"> 14</li>
+                                <li><input type="checkbox"> 15</li>
+                                <li><input type="checkbox"> 16</li>
+                                <li><input type="checkbox"> 17</li>
+                                <li><input type="checkbox"> 18</li>
+                                <li><input type="checkbox"> 19</li>
+                                <li><input type="checkbox"> 20</li>
+                                <li><input type="checkbox"> 21</li>
+                                <li><input type="checkbox"> 22</li>
+                                <li><input type="checkbox"> 23</li>
+                                <li><input type="checkbox"> 24</li>
+                                <li><input type="checkbox"> 25</li>
+                                <li><input type="checkbox"> 26</li>
+                                <li><input type="checkbox"> 27</li>
+                                <li><input type="checkbox"> 28</li>
+                                <li><input type="checkbox"> 29</li>
+                                <li><input type="checkbox"> 30</li>
+                                <li><input type="checkbox"> 31</li>
+                                <li><input type="checkbox"> 32</li>
+                                <li><input type="checkbox"> 33</li>
+                                <li><input type="checkbox"> 34</li>
+                                <li><input type="checkbox"> 35</li>
+                                <li><input type="checkbox"> 36</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            
+            <!-- Hidden Packages -->
+            <div class="category">
+
+                <div style="text-align: center">
+                    <img style="height: 80px;" src="images/hiddenpackages.png">
+                </div>
+
+                <div class="contents">
+                    <div style="margin: 10px auto">
+                        <ul style="columns: 10">
+                            <li><input type="checkbox"> 01</li>
+                            <li><input type="checkbox"> 02</li>
+                            <li><input type="checkbox"> 03</li>
+                            <li><input type="checkbox"> 04</li>
+                            <li><input type="checkbox"> 05</li>
+                            <li><input type="checkbox"> 06</li>
+                            <li><input type="checkbox"> 07</li>
+                            <li><input type="checkbox"> 08</li>
+                            <li><input type="checkbox"> 09</li>
+                            <li><input type="checkbox"> 10</li>
+                            <li><input type="checkbox"> 11</li>
+                            <li><input type="checkbox"> 12</li>
+                            <li><input type="checkbox"> 13</li>
+                            <li><input type="checkbox"> 14</li>
+                            <li><input type="checkbox"> 15</li>
+                            <li><input type="checkbox"> 16</li>
+                            <li><input type="checkbox"> 17</li>
+                            <li><input type="checkbox"> 18</li>
+                            <li><input type="checkbox"> 19</li>
+                            <li><input type="checkbox"> 20</li>
+                            <li><input type="checkbox"> 21</li>
+                            <li><input type="checkbox"> 22</li>
+                            <li><input type="checkbox"> 23</li>
+                            <li><input type="checkbox"> 24</li>
+                            <li><input type="checkbox"> 25</li>
+                            <li><input type="checkbox"> 26</li>
+                            <li><input type="checkbox"> 27</li>
+                            <li><input type="checkbox"> 28</li>
+                            <li><input type="checkbox"> 29</li>
+                            <li><input type="checkbox"> 30</li>
+                            <li><input type="checkbox"> 31</li>
+                            <li><input type="checkbox"> 32</li>
+                            <li><input type="checkbox"> 33</li>
+                            <li><input type="checkbox"> 34</li>
+                            <li><input type="checkbox"> 35</li>
+                            <li><input type="checkbox"> 36</li>
+                            <li><input type="checkbox"> 37</li>
+                            <li><input type="checkbox"> 38</li>
+                            <li><input type="checkbox"> 39</li>
+                            <li><input type="checkbox"> 40</li>
+                            <li><input type="checkbox"> 41</li>
+                            <li><input type="checkbox"> 42</li>
+                            <li><input type="checkbox"> 43</li>
+                            <li><input type="checkbox"> 44</li>
+                            <li><input type="checkbox"> 45</li>
+                            <li><input type="checkbox"> 46</li>
+                            <li><input type="checkbox"> 47</li>
+                            <li><input type="checkbox"> 48</li>
+                            <li><input type="checkbox"> 49</li>
+                            <li><input type="checkbox"> 50</li>
+                            <li><input type="checkbox"> 51</li>
+                            <li><input type="checkbox"> 52</li>
+                            <li><input type="checkbox"> 53</li>
+                            <li><input type="checkbox"> 54</li>
+                            <li><input type="checkbox"> 55</li>
+                            <li><input type="checkbox"> 56</li>
+                            <li><input type="checkbox"> 57</li>
+                            <li><input type="checkbox"> 58</li>
+                            <li><input type="checkbox"> 59</li>
+                            <li><input type="checkbox"> 60</li>
+                            <li><input type="checkbox"> 61</li>
+                            <li><input type="checkbox"> 62</li>
+                            <li><input type="checkbox"> 63</li>
+                            <li><input type="checkbox"> 64</li>
+                            <li><input type="checkbox"> 65</li>
+                            <li><input type="checkbox"> 66</li>
+                            <li><input type="checkbox"> 67</li>
+                            <li><input type="checkbox"> 68</li>
+                            <li><input type="checkbox"> 69</li>
+                            <li><input type="checkbox"> 70</li>
+                            <li><input type="checkbox"> 71</li>
+                            <li><input type="checkbox"> 72</li>
+                            <li><input type="checkbox"> 73</li>
+                            <li><input type="checkbox"> 74</li>
+                            <li><input type="checkbox"> 75</li>
+                            <li><input type="checkbox"> 76</li>
+                            <li><input type="checkbox"> 77</li>
+                            <li><input type="checkbox"> 78</li>
+                            <li><input type="checkbox"> 79</li>
+                            <li><input type="checkbox"> 80</li>
+                            <li><input type="checkbox"> 81</li>
+                            <li><input type="checkbox"> 82</li>
+                            <li><input type="checkbox"> 83</li>
+                            <li><input type="checkbox"> 84</li>
+                            <li><input type="checkbox"> 85</li>
+                            <li><input type="checkbox"> 86</li>
+                            <li><input type="checkbox"> 87</li>
+                            <li><input type="checkbox"> 88</li>
+                            <li><input type="checkbox"> 89</li>
+                            <li><input type="checkbox"> 90</li>
+                            <li><input type="checkbox"> 91</li>
+                            <li><input type="checkbox"> 92</li>
+                            <li><input type="checkbox"> 93</li>
+                            <li><input type="checkbox"> 94</li>
+                            <li><input type="checkbox"> 95</li>
+                            <li><input type="checkbox"> 96</li>
+                            <li><input type="checkbox"> 97</li>
+                            <li><input type="checkbox"> 98</li>
+                            <li><input type="checkbox"> 99</li>
+                            <li><input type="checkbox"> 100</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        function initItems() {
+            const items = JSON.parse(localStorage.getItem('checkedItemsVC'));
+            if (!items) return saveItems();
+            items.forEach((val, index) => $('input')[index].checked = val);
+            saveItems();
+        }
+        function saveItems() {
+            const itemStats = [];
+            
+            let numSelected = 0;
+            const numTotal = $('input').length;
+
+            $('input').each((index, elem) => {
+                itemStats.push(elem.checked);
+                if (elem.checked) numSelected++;
+            });
+            localStorage.setItem('checkedItemsVC', JSON.stringify(itemStats));
+
+            const completedPct = (numSelected/numTotal) * 100;
+            $('#progress').text(`${numSelected}/${numTotal} (${completedPct.toFixed(2)}%) Completed`);
+
+            playAudio('sounds/vc-notification.mp3');
+        }
+
+        $('input').click(() => saveItems());
+        $(document).ready(() => initItems());
+
+        function playAudio(url) {
+            return new Promise(function(resolve, reject) {
+                var audio = new Audio();
+                audio.preload = "auto";
+                audio.autoplay = true;
+                audio.onerror = reject;
+                audio.onended = resolve;
+                audio.src = url
+            });
+        }
+
+    </script>
+
+</body>
+
+</html>
